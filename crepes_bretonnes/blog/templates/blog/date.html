@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Ma page d'accueil{% endblock %}
+
+{% block content %}
+
+	<!-- Ce commentaire HTML sera visible dans le code source. -->
+	{# Ce commentaire Django ne sera pas visible dans le code source. #}
+
+	{% load static %}
+      <img src="{% static 'blog/crepe.jpg' %}" width="100" height="80" alt="Mon image" />
+
+	<h1>Bienvenue sur mon blog {{ pseudo|default:"visiteur" }}</h1>
+	{% if age > 25 %}
+	    Bienvenue Monsieur, passez un excellent moment dans nos locaux.
+	{% elif age > 16 %}
+	    Vas-y, tu peux passer.
+	{% else %}
+	    Tu ne peux pas rentrer petit, tu es trop jeune !
+	{% endif %}
+	<p>La date actuelle est : {{ date }}</p>
+
+	<p>Les couleurs de l'arc-en-ciel sont :</p>
+
+	<ul>
+	{% for couleur in couleurs %}
+	    <li>{{ couleur }}</li>
+	{% endfor %}
+	</ul>
+
+	<ul>
+	{% for code, nom in couleursdico.items %}
+	    <li style="color:#{{ code }}">{{ nom }}</li>
+	{% endfor %}
+	</ul>
+
+	<a href="{% url "blog.views.view_article" ID_article %}">
+    	Lien vers mon super article n° {{ ID_article }}
+	</a>
+
+	<h3>Commentaires de l'article</h3>
+	{% for commentaire in commentaires %}
+	    <p>{{ commentaire }}</p>
+	{% empty %}
+	    <p class="empty">Pas de commentaires pour le moment.</p>
+	{% endfor %}
+
+{% endblock %}
